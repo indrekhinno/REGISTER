@@ -20,8 +20,10 @@
             </table>
             <button type="submit">Logi sisse</button>
         </form>
-		<p>
-		Ei ole kontot? <a href="<?= $_SERVER['PHP_SELF']?>?view=register">loo see siin</a>
-		</p>
+
+        <p>
+            Ei ole kontot? <a href="<?= $_SERVER['PHP_SELF']?>?view=register">loo see siin</a>
+        </p>
+
     </body>
 </html>

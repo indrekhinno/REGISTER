@@ -2,7 +2,6 @@
 
 session_start();
 
-
 // laeme sisse funktsioonid andmete laadimiseks ja salvestamiseks
 require 'model.php';
 
@@ -22,6 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $kategooria = intval($_POST['kategooria']);
             $result = controller_add($nimetus, $kogus, $kategooria);
             break;
+            
+        case 'muuda':
+        	$id = intval($_POST['Id']);
+            $nimetus = $_POST['nimetus'];
+            $kogus = intval($_POST['kogus']);
+            $kategooria = intval($_POST['kategooria']);
+            $result = controller_edit($id, $nimetus, $kogus, $kategooria);
+            break;
 
         case 'kustuta':
             $id = $_POST['id'];
@@ -37,16 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         case 'register':
             $kasutajanimi = $_POST['kasutajanimi'];
             $parool = $_POST['parool'];
-            $parool2 = $_POST['parool'];
+            $parool2 = $_POST['parool2'];
             $result = controller_add_user($kasutajanimi, $parool, $parool2);
             break;
 
         case 'logout':
             $result = controller_logout();
             break;
-
-
-
     }
 
     if ($result) {
@@ -70,7 +74,16 @@ switch ($view) {
         require 'view_login.php';
         break;
     case 'register':
-    	require 'view_register.php';
+        require 'view_register.php';
+        break;
+    case 'modify':
+    	check_login();	
+    	$kaup = model_get($_GET['id']);
+    	if(!$kaup){
+	    	echo 'Tundmatu ID';
+	    	exit;
+	    	}
+	    	require 'view_modify.php';
     	break;
     default:
         echo 'Viga!';
