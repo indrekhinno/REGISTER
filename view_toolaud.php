@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="stiil.css">
     <title>Kõnekeskus</title>
 </head>
 
@@ -14,19 +15,24 @@
         <input type="hidden" name="action" value="logout">
         <button type="submit">Logi välja</button>
     </form>
+<p>
+
 
     <form id="lisa-vorm" method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
         <input type="hidden" name="action" value="lisa">
         <table>
-            <tr>
+          <thead class="sisestuspealdis">
+              <tr>
                 <td>Kirjeldus</td>
                 <td>Tähtaeg</td>
                 <td>Kriitilisus</td>
             </tr>
+          </thead>
+          <tbody>
             <tr>
-                <td><input type="text" name="kirjeldus" id="kirjeldus" value=""></td>
-                <td><input type="datetime" name="tahtaeg" id="tahtaeg" value=""></td>
-                <td><select name="kriitilisus">
+                <td><input type="textarea" name="kirjeldus" id="kirjeldus" value=""></td>
+                <td><input type="date" name="tahtaeg" id="tahtaeg" value=""></td>
+                <td><select name="kriitilisus" id="tase">
                 	<option value= ""> -- Vali tase -- </option>
                 	<?php foreach (kriitilisus_model_load() as $rida):?>
 
@@ -38,15 +44,35 @@
                 	</select>
                 </td>
             </tr>
+          </tbody>
         </table>
         <p> <button type="submit">Registreeri pöördumine</button> </p>
     </form>
 
-    <table id="nimekiri" border="1">
+    <form>
+
+  <form method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
+    <?php $value = empty($_GET['show']) ? 'Koik': $_GET['show']  ?>
+    <div class="filtrivalik">
+    <?php $sel1 = ($value == "Avatud") ? 'checked="checked"' : ''; ?>
+    <input type="radio" name="show" value="Avatud" <?= $sel1; ?> >Näita ainult avatuid<br>
+    <?php $sel2 = ($value == "Suletud") ? 'checked="checked"' : ''; ?>
+    <input type="radio" name="show" value="Suletud" <?= $sel2; ?> >Näita ainult suletuid<br>
+    <?php $sel3 = ($value == "Koik") ? 'checked="checked"' : ''; ?>
+    <input type="radio" name="show" value="Koik" <?= $sel3; ?> >Näita kõiki kirjeid<br>
+    <br>
+    <button type="submit">Filtreeri</button>
+  </div>
+
+
+
+  </form>
+  <p>
+    <table>
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Kirjeldus</th>
+                <th class="tabelitekst">Kirjeldus</th>
                 <th>Kriitilisus</th>
                 <th>Registreeritud</th>
                 <th>Tähtaeg</th>
@@ -66,31 +92,29 @@
             <tr>
                 <td> <?= htmlspecialchars($rida['Id']) ?> </td>
                 <td> <?= htmlspecialchars($rida['Kirjeldus']) ?></td>
-                <td>
-                <a href="<?= $_SERVER['PHP_SELF']?>?Kriitilisus=<?= $rida['kat']?>">
-                <?= htmlspecialchars($rida['Kriitilisus']) ?>
-                </a>
-                </td>
-                <td> <?= htmlspecialchars($rida['Registreeritud']) ?></td>
+                <td> <?= htmlspecialchars($rida['Nimetus']) ?> </td>
+                <td> <?= htmlspecialchars($rida['Lisatud']) ?></td>
                 <td> <?= htmlspecialchars($rida['Tahtaeg']) ?></td>
-                <td> <?= htmlspecialchars($rida['Kasutaja']) ?></td>
-                <td>
+                <td> <?= htmlspecialchars($rida['Kasutajanimi']) ?></td>
+                <td> <?php if($rida['Kas_lahendatud'] == '0'){ ?>
+
                     <form method="post" action="<?= $_SERVER['PHP_SELF']; ?>">
                         <input type="hidden" name="action" value="muuda">
                         <input type="hidden" name="id" value="<?= $rida['Id']; ?>">
-                        <button type="submit">Märgi lahendatuks</button>
-                    </form>
+                        <button type="submit" >Märgi lahendatuks</button>
+                    </form><?php } ?>
+
                 </td>
             </tr>
 
         <?php
             endforeach;
             // ts?kli l?pp
-        ?>
+            ?>
 
         </tbody>
     </table>
 
+<script src="kontrolli.js"></script>
 </body>
-
 </html>

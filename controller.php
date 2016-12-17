@@ -1,21 +1,20 @@
 <?php
 
-function controller_add($nimetus, $kogus, $kategooria)
+function controller_add($kirjeldus, $tahtaeg, $kriitilisus, $kasutaja)
 {
-    if ($nimetus == '' || $kogus <= 0 || $kategooria <= 0) {
-        return false;
-    }
+    if ($kirjeldus==''|| $kriitilisus <1||$kriitilisus >3) {
+	    return false;
+	    }
+	    return model_add($kirjeldus, $tahtaeg, $kriitilisus, $kasutaja);
 
-    return model_add($nimetus, $kogus, $kategooria);
 }
 
-function controller_delete($id)
+function controller_resolve($id)
 {
     if ($id <= 0) {
         return false;
     }
-
-    return model_delete($id);
+    return model_resolve($id);
 }
 
 function controller_user()
@@ -29,20 +28,19 @@ function controller_user()
 
 function controller_login($kasutajanimi, $parool)
 {
-    if ($kasutajanimi == '' || $parool == '') {
-        return false;
-    }
+    if($kasutajanimi==''|| $parool == ''){
+	    return false;
+	    }
+	$id = model_get_user($kasutajanimi, $parool);
 
-    $id = model_get_user($kasutajanimi, $parool);
+	if(!$id){
+		return false;
+		}
+	session_regenerate_id();
+	$_SESSION['user']=$id;
 
-    if (!$id) {
-        return false;
-    }
+	return $id;
 
-    session_regenerate_id();
-    $_SESSION['user'] = $id;
-
-    return $id;
 }
 
 function controller_logout()
@@ -52,18 +50,9 @@ function controller_logout()
     return true;
 }
 
-function controller_add_user($kasutajanimi, $parool, $parool2)
-{
-    if ($kasutajanimi == '' || $parool == '' || $parool != $parool2) {
-        return false;
-    }
-
-    return model_add_user($kasutajanimi, $parool);
-}
-
-function controller_edit($id, $nimetus, $kogus, $kategooria){
-	if($id<=0 || $nimetus =='' || $kogus<=0 || $kategooria <=0)
-	{return false;
+function controller_add_user($kasutajanimi, $parool, $parool2){
+	if($kasutajanimi =='' || $parool=='' || $parool!=$parool2){
+		return false;
 		}
-		return model_edit($id, $nimetus, $kogus, $kategooria);
+		return model_add_user($kasutajanimi, $parool);
 	}

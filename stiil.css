@@ -1,0 +1,97 @@
+/* css faili põhikood pärineb siit saidilt
+https://www.sanwebe.com/2014/08/css-html-forms-designs */
+
+body {
+    margin: 10px auto;
+    padding: 20px 12px 10px 20px;
+    font: 14px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+input[type=text],
+input[type=textarea],
+input[type=password],
+input[type=date],
+input[type=number],
+input[type=radio],
+textarea,
+select {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid #BEBEBE;
+    padding: 7px;
+    margin: 1px;
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+}
+input[type=text]:focus,
+input[type=date]:focus,
+input[type=datetime]:focus,
+input[type=number]:focus,
+input[type=textarea]:focus,
+input[type=time]:focus,
+input[type=radio]:focus,
+input[type=password]:focus,
+textarea:focus,
+select:focus {
+    -moz-box-shadow: 0 0 8px #88D5E9;
+    -webkit-box-shadow: 0 0 8px #88D5E9;
+    box-shadow: 0 0 8px #88D5E9;
+    border: 1px solid #88D5E9;
+}
+input[type=textarea] {
+    width: 40em;
+    height: auto;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 0px;
+}
+input[type=date] {
+    width: auto;
+    padding: 5px 15px 5px 15px;
+    height: auto;
+    margin-top: 5px;
+}
+button[type=submit],
+input[type=button] {
+    background: #4B99AD;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+}
+button[type=submit]:hover,
+input[type=button]:hover {
+    background: #4691A4;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.sisestuspealdis {
+    border: 2px solid gray;
+    background-color: #696969;
+    color: white;
+    padding-top: 25px;
+}
+th,
+td {
+    padding: 0px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd
+}
+tr:hover {
+    background-color: #f5f5f5
+}
+tr {
+    height: 30px
+}
+th {
+    background-color: #696969;
+    color: white;
+    padding-top: 15px;
+}
+.tabelitekst {
+    width: 38em
+}
